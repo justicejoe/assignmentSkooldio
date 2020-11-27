@@ -54,27 +54,32 @@ const getValue = (value) => {
 }
 const deck = getDeck()
 
+let total = 0
 
 const playCard = async () => {
   const result1 = await inquirer.prompt(question1)
+  let = reg = /^\d+$/
+  if(!result1.bet.match(reg)){
+    console.log('Your bet is not a number. Please start new game.')
+    return null  
+  }
+
   console.log(result1.bet)
   const shuffleDeck = shuffle()
   const playerHand = [shuffleDeck[0], shuffleDeck[1]]
   const dealerHand = [shuffleDeck[shuffleDeck.length-1], shuffleDeck[shuffleDeck.length-2]]
   console.log(`You got ${shuffleDeck[0].cardName}, ${shuffleDeck[1].cardName}`)
   console.log(`The dealer got ${shuffleDeck[shuffleDeck.length-1].cardName}, ${shuffleDeck[shuffleDeck.length-2].cardName}`)
-  let total = 0
   if(getValue(playerHand) > getValue(dealerHand)){
     console.log(`You Won!!!, received ${result1.bet} chips`)
-    total = result1.bet
+    total =  total + Number(result1.bet)
   }
   else if(getValue(playerHand) < getValue(dealerHand)){
     console.log(`You lose to the dealer`)
-    total = 0
+    total = total - Number(result1.bet)
   }
   else{
     console.log(`You tie with the dealer and get nothing`)
-    total = 0
   }
   const wannaPlayMore = await inquirer.prompt(question2)
   if(wannaPlayMore.answer === 'Yes' || wannaPlayMore.answer === 'yes' || wannaPlayMore.answer === 'y'){
